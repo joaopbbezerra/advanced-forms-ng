@@ -1,0 +1,4 @@
+<form [formGroup]="myForm" (ngSubmit)="handleSubmit()" #form="ngForm">
+  <input formControlName="username" type="text" />
+  <span>{{ usernameStatus() }}</span>
+</form>

@@ -1,4 +1,43 @@
 <form [formGroup]="myForm" (ngSubmit)="handleSubmit()" #form="ngForm">
-  <input formControlName="username" type="text" />
-  <span>{{ usernameStatus() }}</span>
+  <div>
+    <input formControlName="username" type="text" />
+    <span>{{ usernameStatus() }}</span>
+    @if(!myForm.controls.username.valid){
+      <p>Please provide a username that is not taken</p>
+    }
+  </div>
+  <div>
+    <input formControlName="age" type="number" />
+    @if(!myForm.controls.age.valid && myForm.controls.age.dirty || form.submitted){
+      <p>Age must be greater than 18</p>
+    }
+  </div>
+  <div>
+    <input formControlName="password" type="password" />
+    @if(!myForm.controls.password.valid){
+      <p>Password must be at least 8 characters long</p>
+    }
+  </div>
+  <div>
+    <input formControlName="confirmPassword" type="password" />
+    @if(myForm.hasError('passwordMatch')){
+      <p>Must match password</p>
+    }
+  </div>
+
+  @if(!myForm.valid){
+    <p>There are errors with the form!</p>
+  }
+  <button type="submit" [disabled]="myForm.pending || myForm.valid">Submit</button>
+
+  <div>
+    <h2>Add Guests</h2>
+    <ng-container formArrayName="guests">
+      @for(guest of myForm.controls.guests.controls; let i = $index; track
+        i){
+        <input [formControlName]="i" type="text" />
+      }
+    </ng-container>
+    <button type="button" (click)="addGuest()">Add</button>
+  </div>
 </form>

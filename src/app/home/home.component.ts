@@ -20,17 +20,14 @@ export class HomeComponent {
   myForm = this.fb.nonNullable.group({
     username: ['', Validators.required, usernameAvailableValidator],
     age: [null, adultValidator],
-  });
-
-  createForm = this.fb.nonNullable.group(
-    {
-      email: ['', [Validators.email, Validators.required]],
-      password: ['', [Validators.minLength(8), Validators.required]],
-      confirmPassword: ['', [Validators.required]],
+    email: ['', [Validators.email, Validators.required]],
+    password: ['', [Validators.minLength(8), Validators.required]],
+    confirmPassword: ['', [Validators.required]],
+    guests: this.fb.array([]),
     },
     {
-      //The AbstractControl will have access to all the inputs in here.
-      validators: [passwordMatchesValidator],
+  //The AbstractControl will have access to all the inputs in here.
+  validators: [passwordMatchesValidator],
     }
   );
 
@@ -39,5 +36,10 @@ export class HomeComponent {
 
   handleSubmit() {
     console.log(this.myForm.value);
+  }
+
+  addGuest() {
+    const guestControl = this.fb.control('', Validators.required);
+    this.myForm.controls.guests.push(guestControl);
   }
 }

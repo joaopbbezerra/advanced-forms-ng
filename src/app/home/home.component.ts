@@ -4,12 +4,14 @@ import {adultValidator} from "../shared/utils/adult-validator";
 import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
 import {toSignal} from "@angular/core/rxjs-interop";
 import {passwordMatchesValidator} from "../shared/utils/password-matches-validator";
+import {HappinessLevelComponent} from "./happiness-level/happiness-level.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HappinessLevelComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
@@ -24,6 +26,7 @@ export class HomeComponent {
     password: ['', [Validators.minLength(8), Validators.required]],
     confirmPassword: ['', [Validators.required]],
     guests: this.fb.array([]),
+      happiness: ['neutral', Validators.required],
     },
     {
   //The AbstractControl will have access to all the inputs in here.
